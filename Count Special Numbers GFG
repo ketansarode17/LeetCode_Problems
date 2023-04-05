@@ -1,0 +1,32 @@
+class Solution {
+    private:
+    int divi[100002];
+    unordered_map<int,int>mp;
+  public:
+    int countSpecialNumbers(int n, vector<int> arr) {
+        // Code here
+        for(auto& it:arr)mp[it]++;
+        int ans=0;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=1;j*j<=arr[i];j++)
+            {
+                if(arr[i]%j==0)
+                {
+                    if(mp[j])divi[arr[i]]++;
+                    if(mp[arr[i]/j])divi[arr[i]]++;
+                    if(j==arr[i]/j and mp[j])divi[arr[i]]--;
+                }
+            }
+        }
+        for(auto& it:arr)
+        {
+            if(divi[it]==1)
+            {
+                if(mp[it]>1)ans++;
+            }
+            else if(divi[it]>1)ans++;
+        }
+        return ans;
+    }
+};

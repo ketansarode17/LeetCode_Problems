@@ -93,18 +93,12 @@ void addNode(Node *head, int pos, int data)
 {
    // Your code here
    Node* temp=head;
-   int cnt=0;
-   while(1)
+   while(pos--)
    {
-       if(cnt==pos)
-       {
-           Node* node=new Node(data);
-           node->prev=temp;
-           node->next=temp->next;
-           temp->next=node;
-           break;
-       }
-       cnt++;
        temp=temp->next;
    }
+   Node* node=new Node(data);
+   node->next=temp->next;
+   temp->next=node;
+   node->prev=temp;
 }

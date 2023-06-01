@@ -43,18 +43,21 @@ class Solution
       //Your code here
       if(x==1)
       {
-          return head_ref->next;
+          Node* temp=head_ref;
+          head_ref=temp->next;
+          delete(temp);
+          return head_ref;
       }
+      x--;
       Node* temp=head_ref;
-      int cnt=1;
-      while(cnt<x)
+      while(x--)
       {
-          cnt++;
           temp=temp->next;
       }
+      Node* ref=temp;
       temp->prev->next=temp->next;
-      if(temp->next)
-      temp->next->prev=temp->prev;
+      if(temp->next)temp->next->prev=temp->prev;
+      delete(ref);
       return head_ref;
     }
 };

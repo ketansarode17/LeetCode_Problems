@@ -110,29 +110,23 @@ struct Node
 	struct Node *left, *right;
 };
 */
-pair<Node*,int> helper(Node* root,int k,int& ans,int node)
+bool getPath(vector<int>&path,Node* root,int k,int node)
 {
-    if(!root)return {NULL,-1};
-    if(root->data==node)return {root,0};
-    auto it=helper(root->left,k,ans,node);
-    if(it.first)
-    {
-        if(it.second+1==k)ans=root->data;
-        return {it.first,it.second+1};
-    }
-    it=helper(root->right,k,ans,node);
-    if(it.first)
-    {
-        if(it.second+1==k)ans=root->data;
-        return {it.first,it.second+1};
-    }
-    return {NULL,-1};
+    if(!root)return false;
+    if(root->data==node)return true;
+    path.push_back(root->data);
+    if(getPath(path,root->left,k,node))return true;
+    if(getPath(path,root->right,k,node))return true;
+    path.pop_back();
+    return false;
 }
 // your task is to complete this function
 int kthAncestor(Node *root, int k, int node)
 {
     // Code here
-    int ans=-1;
-    helper(root,k,ans,node);
-    return ans;
+    vector<int>path;
+    getPath(path,root,k,node);
+    reverse(path.begin(),path.end());
+    if(k>path.size())return -1;
+    return path[k-1];
 }
